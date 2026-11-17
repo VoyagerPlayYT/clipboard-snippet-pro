@@ -67,32 +67,51 @@ init_db()
 class AddSnippetDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Создать новый сниппет")
-        self.resize(400, 320)
+        self.setWindowTitle("Создать новый сниппет • Obsidian & Amber")
+        self.resize(440, 360)
         self.setStyleSheet("""
-            QDialog { background-color: #1A1D27; color: #FFFFFF; }
-            QLabel { color: #A0A5BD; font-size: 12px; }
-            QLineEdit, QTextEdit, QComboBox {
-                background-color: #242938;
-                border: 1px solid #363D52;
-                border-radius: 8px;
-                color: #FFFFFF;
-                padding: 6px;
+            QDialog {
+                background-color: #0D0D0F;
+                color: #F8FAFC;
+            }
+            QLabel {
+                color: #94A3B8;
                 font-size: 12px;
+                font-weight: 600;
+            }
+            QLineEdit, QTextEdit, QComboBox {
+                background-color: #141418;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 10px;
+                color: #F8FAFC;
+                padding: 8px 12px;
+                font-size: 13px;
+                font-family: 'Segoe UI', 'Inter', sans-serif;
+            }
+            QLineEdit:focus, QTextEdit:focus, QComboBox:focus {
+                border: 1px solid #F59E0B;
+                background-color: #1A1A22;
             }
             QPushButton {
-                background-color: #6366F1;
-                color: #FFFFFF;
-                border-radius: 8px;
-                padding: 8px 16px;
-                font-weight: bold;
+                background-color: #F59E0B;
+                color: #0D0D0F;
+                border-radius: 10px;
+                padding: 10px 18px;
+                font-weight: 700;
+                font-size: 13px;
             }
-            QPushButton:hover { background-color: #4F46E5; }
+            QPushButton:hover {
+                background-color: #D97706;
+            }
         """)
 
         layout = QVBoxLayout(self)
+        layout.setContentsMargins(20, 20, 20, 20)
+        layout.setSpacing(10)
+
         layout.addWidget(QLabel("Название сниппета:"))
         self.title_input = QLineEdit(self)
+        self.title_input.setPlaceholderText("Например: Домашний адрес или Wi-Fi")
         layout.addWidget(self.title_input)
 
         layout.addWidget(QLabel("Категория (Тег):"))
@@ -102,10 +121,11 @@ class AddSnippetDialog(QDialog):
 
         layout.addWidget(QLabel("Содержимое сниппета:"))
         self.content_input = QTextEdit(self)
+        self.content_input.setPlaceholderText("Введите текст, который будет копироваться в буфер...")
         layout.addWidget(self.content_input)
 
         btn_box = QHBoxLayout()
-        self.save_btn = QPushButton("Сохранить сниппет", self)
+        self.save_btn = QPushButton("💾 Сохранить сниппет", self)
         self.save_btn.clicked.connect(self.save_snippet)
         btn_box.addWidget(self.save_btn)
         layout.addLayout(btn_box)
@@ -130,8 +150,9 @@ class AddSnippetDialog(QDialog):
 class ClipboardManagerApp(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Clipboard & Snippet Manager Pro")
-        self.resize(750, 560)
+        self.setWindowTitle("Clipboard & Snippet Manager Pro • VoyagerTeam Lab")
+        self.resize(800, 600)
+        self.setMinimumSize(700, 500)
         self.last_clipboard_text = ""
         self.is_monitoring = True
 
@@ -148,86 +169,111 @@ class ClipboardManagerApp(QMainWindow):
 
     def apply_styles(self):
         self.setStyleSheet("""
-            QMainWindow { background-color: #0F121C; }
-            QWidget { font-family: 'Segoe UI', sans-serif; color: #E2E8F0; }
+            QMainWindow {
+                background-color: #0D0D0F;
+            }
+            QWidget {
+                font-family: 'Segoe UI', 'Inter', sans-serif;
+                color: #F8FAFC;
+            }
             QLineEdit {
-                background-color: #1A1F2E;
-                border: 1px solid #2B3347;
-                border-radius: 10px;
-                padding: 10px 14px;
-                color: #FFFFFF;
+                background-color: #141418;
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 12px;
+                padding: 12px 16px;
+                color: #F8FAFC;
                 font-size: 13px;
             }
-            QLineEdit:focus { border: 1px solid #6366F1; }
-            QTabWidget::pane { border: none; }
+            QLineEdit:focus {
+                border: 1px solid #F59E0B;
+                background-color: #181820;
+            }
+            QTabWidget::pane {
+                border: none;
+            }
             QTabBar::tab {
-                background: #1A1F2E;
+                background: #141418;
                 color: #94A3B8;
-                padding: 10px 20px;
-                margin-right: 4px;
-                border-top-left-radius: 8px;
-                border-top-right-radius: 8px;
+                padding: 10px 22px;
+                margin-right: 6px;
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
                 font-weight: 600;
-                font-size: 12px;
+                font-size: 13px;
+                border: 1px solid rgba(255, 255, 255, 0.05);
+                border-bottom: none;
             }
             QTabBar::tab:selected {
-                background: #6366F1;
-                color: #FFFFFF;
+                background: #F59E0B;
+                color: #0D0D0F;
+                font-weight: 700;
             }
             QListWidget {
-                background-color: #151A28;
-                border: 1px solid #242B3D;
-                border-radius: 12px;
-                padding: 6px;
+                background-color: #111115;
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                border-radius: 16px;
+                padding: 8px;
                 outline: none;
             }
             QListWidget::item {
-                background-color: #1C2336;
-                border: 1px solid #2C354D;
-                border-radius: 8px;
-                margin-bottom: 6px;
-                padding: 10px;
+                background-color: #16161C;
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                border-radius: 12px;
+                margin-bottom: 8px;
+                padding: 12px;
                 color: #F8FAFC;
+                font-size: 13px;
             }
             QListWidget::item:hover {
-                background-color: #242D45;
-                border: 1px solid #6366F1;
+                background-color: #1D1D26;
+                border: 1px solid rgba(245, 158, 11, 0.5);
+            }
+            QListWidget::item:selected {
+                background-color: #242432;
+                border: 1px solid #F59E0B;
+                color: #FCD34D;
             }
             QPushButton {
-                background-color: #6366F1;
-                color: #FFFFFF;
-                border-radius: 8px;
-                padding: 8px 14px;
+                background-color: #F59E0B;
+                color: #0D0D0F;
+                border-radius: 10px;
+                padding: 9px 18px;
                 font-size: 12px;
-                font-weight: 600;
+                font-weight: 700;
             }
-            QPushButton:hover { background-color: #4F46E5; }
+            QPushButton:hover {
+                background-color: #D97706;
+            }
         """)
 
     def init_ui(self):
         central = QWidget(self)
         self.setCentralWidget(central)
         layout = QVBoxLayout(central)
-        layout.setContentsMargins(18, 18, 18, 18)
+        layout.setContentsMargins(20, 20, 20, 20)
         layout.setSpacing(14)
 
         # Header bar
         header_layout = QHBoxLayout()
-        title_label = QLabel("📋 Clipboard & Snippet Manager Pro", self)
-        title_label.setStyleSheet("font-size: 16px; font-weight: bold; color: #FFFFFF;")
+        title_label = QLabel("⚡ Clipboard & Snippet Pro", self)
+        title_label.setStyleSheet("font-size: 18px; font-weight: 800; color: #FFFFFF;")
         header_layout.addWidget(title_label)
+
+        sub_label = QLabel("Obsidian & Electric Amber", self)
+        sub_label.setStyleSheet("color: #F59E0B; font-size: 11px; font-weight: 700; background: rgba(245, 158, 11, 0.15); padding: 3px 8px; border-radius: 6px;")
+        header_layout.addWidget(sub_label)
 
         header_layout.addStretch()
 
-        self.status_label = QLabel("🟢 Мониторинг буфера активен", self)
-        self.status_label.setStyleSheet("color: #10B981; font-size: 11px; font-weight: bold;")
+        self.status_label = QLabel("● Мониторинг буфера активен", self)
+        self.status_label.setStyleSheet("color: #10B981; font-size: 11px; font-weight: 700; background: rgba(16, 185, 129, 0.1); padding: 4px 10px; border-radius: 8px;")
         header_layout.addWidget(self.status_label)
 
         layout.addLayout(header_layout)
 
         # Search bar
         self.search_input = QLineEdit(self)
-        self.search_input.setPlaceholderText("🔍 Быстрый поиск по истории и тексту сниппетов...")
+        self.search_input.setPlaceholderText("🔍 Поиск по сниппетам и истории буфера обмена...")
         self.search_input.textChanged.connect(self.filter_current_tab)
         layout.addWidget(self.search_input)
 
@@ -243,18 +289,18 @@ class ClipboardManagerApp(QMainWindow):
         hist_layout.addWidget(self.history_list)
 
         hist_ctrl_layout = QHBoxLayout()
-        copy_hint = QLabel("💡 Двойной клик по элементу копирует его обратно в буфер", self)
-        copy_hint.setStyleSheet("color: #64748B; font-size: 11px;")
+        copy_hint = QLabel("💡 Двойной клик копирует запись обратно в буфер", self)
+        copy_hint.setStyleSheet("color: #94A3B8; font-size: 11px;")
         hist_ctrl_layout.addWidget(copy_hint)
         hist_ctrl_layout.addStretch()
 
         clear_hist_btn = QPushButton("🗑 Очистить историю", self)
-        clear_hist_btn.setStyleSheet("background-color: #334155; color: #CBD5E1;")
+        clear_hist_btn.setStyleSheet("background-color: #262630; color: #E2E8F0; border: 1px solid rgba(255, 255, 255, 0.08);")
         clear_hist_btn.clicked.connect(self.clear_history)
         hist_ctrl_layout.addWidget(clear_hist_btn)
         hist_layout.addLayout(hist_ctrl_layout)
 
-        self.tabs.addTab(history_widget, "🕒 История буфера обмена")
+        self.tabs.addTab(history_widget, "🕒 История буфера")
 
         # Tab 2: Snippets
         snippets_widget = QWidget()
@@ -271,13 +317,13 @@ class ClipboardManagerApp(QMainWindow):
         snip_ctrl_layout.addStretch()
         snip_layout.addLayout(snip_ctrl_layout)
 
-        self.tabs.addTab(snippets_widget, "⭐ Библиотека сниппетов")
+        self.tabs.addTab(snippets_widget, "⭐ Сниппеты")
         layout.addWidget(self.tabs)
 
         # Footer toast
         self.toast_label = QLabel("", self)
         self.toast_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.toast_label.setStyleSheet("color: #38BDF8; font-weight: bold; font-size: 12px;")
+        self.toast_label.setStyleSheet("color: #F59E0B; font-weight: 700; font-size: 12px; padding: 4px;")
         layout.addWidget(self.toast_label)
 
     def on_clipboard_changed(self):
@@ -297,7 +343,7 @@ class ClipboardManagerApp(QMainWindow):
         conn.close()
 
         self.load_history()
-        self.show_toast(f"📥 Сохранено в историю: {text[:25]}...")
+        self.show_toast(f"📥 Сохранено в историю: {text[:30]}...")
 
     def load_history(self, filter_text=""):
         self.history_list.clear()
